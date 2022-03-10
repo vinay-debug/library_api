@@ -22,7 +22,7 @@ export default class Application {
     }
 
     public static instance(): Application {
-        return this._instance || (this._instance = new this());
+        return this._instance || (this._instance = new this());  //singleton
     }
 
     public app(): express.Application {
@@ -36,6 +36,13 @@ export default class Application {
 
             //Load the modules
             await Loader.init();
+
+            if (process.env.NODE_ENV === 'test') {
+                await Loader.databaseConnector.dropDatabase();
+            }
+
+            //Connect with database
+            await Loader.databaseConnector.init();
 
             //Set-up middlewares
             await this.setupMiddlewares();
