@@ -1,4 +1,5 @@
-import { AuthenticationType, AuthorizationType, Configurations } from './configuration.types';
+import { AuthenticationType, AuthorizationType, Configurations,
+     DatabaseFlavour, DatabaseORM, DatabaseType } from './configuration.types';
 import * as AppConfig from '../app.config.json';
 
 export class ConfigurationManager {
@@ -13,6 +14,11 @@ export class ConfigurationManager {
                 Authentication: AppConfig.Auth.Authentication as AuthenticationType,
                 Authorization: AppConfig.Auth.Authorization as AuthorizationType,
             },
+            Database : {
+                Type    : AppConfig.Database.Type as DatabaseType,
+                ORM     : AppConfig.Database.ORM as DatabaseORM,
+                Flavour : AppConfig.Database.Flavour as DatabaseFlavour,
+            },
         };
     };
 
@@ -22,6 +28,10 @@ export class ConfigurationManager {
 
     public static Authorization = (): AuthorizationType => {
         return ConfigurationManager._config.Auth.Authorization;
+    };
+
+    public static DatabaseFlavour = (): DatabaseFlavour => {
+        return ConfigurationManager._config.Database.Flavour;
     };
 
     public static MaxUploadFileSize = (): number => {
