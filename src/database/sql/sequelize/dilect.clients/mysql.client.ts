@@ -1,4 +1,4 @@
-import { Logger } from "common/logger";
+import { Logger } from "../../../../common/logger";
 import { DbConfig } from "../database.config";
 const mysql = require('mysql2');
 

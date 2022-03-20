@@ -22,7 +22,7 @@ export default class Application {
     }
 
     public static instance(): Application {
-        return this._instance || (this._instance = new this());
+        return this._instance || (this._instance = new this());  //singleton
     }
 
     public app(): express.Application {
@@ -44,9 +44,6 @@ export default class Application {
             //Connect with database
             await Loader.databaseConnector.init();
 
-            //call the seeder
-            await Loader.seeder.init();
-
             //Set-up middlewares
             await this.setupMiddlewares();
 
@@ -61,8 +58,6 @@ export default class Application {
             await this.listen();
         } catch (error) {
             Logger.instance().log(`An error occurred while starting api service. ${error.message}`);
-            // eslint-disable-next-line no-console
-            console.error(error);
         }
     };
 

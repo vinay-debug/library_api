@@ -5,7 +5,7 @@ import { Logger } from '../../common/logger';
 import { IAuthorizer } from '../authorizer.interface';
 import { CurrentUser } from '../../domain.types/miscellaneous/current.user';
 import { Loader } from '../../startup/loader';
-import { RolePrivilegeService } from 'services/role.privilege.service';
+import { RolePrivilegeService } from '../../services/role.privilege.service';
 
 //const execSync = require('child_process').execSync;
 

@@ -1,70 +1,66 @@
-/* eslint-disable indent */
 import {
     BelongsTo,
-    Column,
-    CreatedAt,
-    DataType,
-    DeletedAt,
-    ForeignKey,
-    IsUUID,
-    Length,
-    Model,
-    PrimaryKey,
-    Table,
-    UpdatedAt,
+    Column, CreatedAt, DataType, DeletedAt,
+    ForeignKey,IsDate,
+    IsUUID, Length, Model, PrimaryKey, Table, UpdatedAt
 } from 'sequelize-typescript';
 import { v4 } from 'uuid';
-import Author from './author.model';
+
+///////////////////////////////////////////////////////////////////////
 
 @Table({
-    timestamps: true,
-    modelName: 'Book',
-    tableName: 'book',
-    paranoid: true,
-    freezeTableName: true,
+    timestamps      : true,
+    modelName       : 'Book',
+    tableName       : 'book',
+    paranoid        : true,
+    freezeTableName : true
 })
-export default class Book extends Model {
+export default class Address extends Model {
+
     @IsUUID(4)
     @PrimaryKey
     @Column({
-        type: DataType.UUID,
-        defaultValue: () => {
-            return v4();
-        },
-        allowNull: false,
+        type         : DataType.UUID,
+        defaultValue : () => { return v4(); },
+        allowNull    : false
     })
     id: string;
 
-    @Length({ max: 70 })
+
     @Column({
-        type: DataType.STRING(70),
-        allowNull: false,
+        type      : DataType.UUID,
+        allowNull : true,
     })
     Name: string;
 
-    @Length({ max: 70 })
+    @Length({ min: 10, max: 13 })
     @Column({
-        type: DataType.STRING(70),
-        allowNull: true,
+        type      : DataType.UUID,
+        allowNull : true,
     })
-    Summary: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-    })
-    PublishedAt: Date;
+    ISBN: string;
 
     @IsUUID(4)
-    @ForeignKey(() => Author)
     @Column({
-        type: DataType.UUID,
-        allowNull: false,
+        type      : DataType.UUID,
+        allowNull : true,
     })
     AuthorId: string;
 
-    @BelongsTo(() => Author)
-    Author: Author;
+
+    @Length({ max: 100 })
+    @Column({
+        type      : DataType.STRING(100),
+        allowNull : true
+    })
+    Summary: string;
+
+    @IsDate
+    @Column({
+        type      : DataType.DATE,
+        allowNull : true
+    })
+    PublishedOn: Date;
 
     @Column
     @CreatedAt
@@ -75,4 +71,5 @@ export default class Book extends Model {
 
     @DeletedAt
     DeletedAt: Date;
+
 }

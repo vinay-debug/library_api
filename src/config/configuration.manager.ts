@@ -1,23 +1,9 @@
-import {
-    AuthenticationType,
-    AuthorizationType,
-    Configurations,
-    DatabaseFlavour,
-    DatabaseORM,
-    DatabaseType,
-} from './configuration.types';
-import * as configuration from '../app.config.json';
+import { AuthenticationType, AuthorizationType, Configurations,
+     DatabaseFlavour, DatabaseORM, DatabaseType } from './configuration.types';
+import * as AppConfig from '../app.config.json';
 
 export class ConfigurationManager {
     static _config: Configurations = null;
-
-    public static DatabaseFlavour = (): DatabaseFlavour => {
-        return ConfigurationManager._config.Database.Flavour;
-    };
-
-    public static DatabaseType = (): DatabaseType => {
-        return ConfigurationManager._config.Database.Type;
-    };
 
     public static loadConfigurations = (): void => {
         ConfigurationManager._config = {
@@ -25,13 +11,13 @@ export class ConfigurationManager {
             SystemIdentifier: '',
             MaxUploadFileSize: 0,
             Auth: {
-                Authentication: configuration.Auth.Authentication as AuthenticationType,
-                Authorization: configuration.Auth.Authorization as AuthorizationType,
+                Authentication: AppConfig.Auth.Authentication as AuthenticationType,
+                Authorization: AppConfig.Auth.Authorization as AuthorizationType,
             },
-            Database: {
-                Type: configuration.Database.Type as DatabaseType,
-                ORM: configuration.Database.ORM as DatabaseORM,
-                Flavour: configuration.Database.Flavour as DatabaseFlavour,
+            Database : {
+                Type    : AppConfig.Database.Type as DatabaseType,
+                ORM     : AppConfig.Database.ORM as DatabaseORM,
+                Flavour : AppConfig.Database.Flavour as DatabaseFlavour,
             },
         };
     };
@@ -44,7 +30,19 @@ export class ConfigurationManager {
         return ConfigurationManager._config.Auth.Authorization;
     };
 
+    public static DatabaseFlavour = (): DatabaseFlavour => {
+        return ConfigurationManager._config.Database.Flavour;
+    };
+
     public static MaxUploadFileSize = (): number => {
         return ConfigurationManager._config.MaxUploadFileSize;
+    };
+
+    public static DatabaseORM = (): DatabaseORM => {
+        return ConfigurationManager._config.Database.ORM;
+    };
+
+    public static DatabaseType = (): DatabaseType => {
+        return ConfigurationManager._config.Database.Type;
     };
 }

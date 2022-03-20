@@ -1,4 +1,4 @@
-import { CurrentUser } from 'domain.types/miscellaneous/current.user';
+import { CurrentUser } from '../../domain.types/miscellaneous/current.user';
 
 declare global {
     namespace Express {

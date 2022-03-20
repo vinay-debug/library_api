@@ -1,4 +1,4 @@
-import { ConfigurationManager } from 'config/configuration.manager';
+import { ConfigurationManager } from '../config/configuration.manager';
 import 'reflect-metadata';
 import { DependencyContainer } from 'tsyringe';
 import { CustomAuthenticator } from './custom/custom.authenticator';

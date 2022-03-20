@@ -1,4 +1,4 @@
-import { IRolePrivilegeRepo } from 'database/repository.interfaces/role.privilege.repo.interface';
+import { IRolePrivilegeRepo } from '../database/repository.interfaces/role.privilege.repo.interface';
 import { inject, injectable } from 'tsyringe';
 import { RolePrivilegeDto } from '../domain.types/role/role.privilege.dto';
 
