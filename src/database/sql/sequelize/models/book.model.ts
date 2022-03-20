@@ -5,6 +5,7 @@ import {
     IsUUID, Length, Model, PrimaryKey, Table, UpdatedAt
 } from 'sequelize-typescript';
 import { v4 } from 'uuid';
+import Author from './author.model';
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -15,7 +16,7 @@ import { v4 } from 'uuid';
     paranoid        : true,
     freezeTableName : true
 })
-export default class Address extends Model {
+export default class Book extends Model {
 
     @IsUUID(4)
     @PrimaryKey
@@ -26,26 +27,30 @@ export default class Address extends Model {
     })
     id: string;
 
-
+    @Length({ max: 70 })
     @Column({
-        type      : DataType.UUID,
-        allowNull : true,
+        type: DataType.STRING(70),
+        allowNull : false,
     })
     Name: string;
 
     @Length({ min: 10, max: 13 })
     @Column({
-        type      : DataType.UUID,
+        type: DataType.STRING(70),
         allowNull : true,
     })
     ISBN: string;
 
     @IsUUID(4)
+    @ForeignKey(() => Author)
     @Column({
         type      : DataType.UUID,
-        allowNull : true,
+        allowNull : false,
     })
     AuthorId: string;
+
+    @BelongsTo(() => Author)
+    Author: Author;
 
 
     @Length({ max: 100 })
@@ -58,7 +63,7 @@ export default class Address extends Model {
     @IsDate
     @Column({
         type      : DataType.DATE,
-        allowNull : true
+        allowNull : false
     })
     PublishedOn: Date;
 

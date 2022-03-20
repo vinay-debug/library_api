@@ -5,6 +5,7 @@ import {
     IsUUID, Length, Model, PrimaryKey, Table, UpdatedAt
 } from 'sequelize-typescript';
 import { v4 } from 'uuid';
+import Book from './book.model';
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -15,7 +16,7 @@ import { v4 } from 'uuid';
     paranoid        : true,
     freezeTableName : true
 })
-export default class Address extends Model {
+export default class BookCopy extends Model {
 
     @IsUUID(4)
     @PrimaryKey
@@ -27,12 +28,15 @@ export default class Address extends Model {
     id: string;
 
     @IsUUID(4)
-    @PrimaryKey
+    @ForeignKey(() => Book)
     @Column({
         type      : DataType.UUID,
-        allowNull : true,
+        allowNull : false,
     })
     BookId: string;
+
+    @BelongsTo(() => Book)
+    Book: Book;
 
     @IsDate
     @Column({
@@ -47,5 +51,8 @@ export default class Address extends Model {
 
     @UpdatedAt
     UpdatedAt: Date;
+
+    @DeletedAt
+    DeletedAt: Date;
 
 }
