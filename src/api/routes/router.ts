@@ -1,5 +1,6 @@
 import express from 'express';
 import { Logger } from '../../common/logger';
+import { register } from './user.routes';
 
 export class Router {
     private _app = null;
@@ -14,9 +15,12 @@ export class Router {
                 //Handling the base route
                 this._app.get('/api/v1/', (req, res) => {
                     res.send({
-                        message : `API [Version ${process.env.API_VERSION}]`,
+                        message: `API [Version ${process.env.API_VERSION}]`,
                     });
                 });
+
+                register(this._app);
+
                 resolve(true);
             } catch (error) {
                 Logger.instance().log('Error initializing the router: ' + error.message);

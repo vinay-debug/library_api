@@ -1,6 +1,4 @@
-
 export interface IDatabaseConnector {
-
     connect(): Promise<boolean>;
 
     sync(): Promise<boolean>;
@@ -10,6 +8,6 @@ export interface IDatabaseConnector {
     dropDatabase(): Promise<boolean>;
 
     executeQuery(query: string): Promise<boolean>;
-    
+
     migrate(): Promise<boolean>;
 }

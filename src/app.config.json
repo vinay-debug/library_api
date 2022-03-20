@@ -7,7 +7,7 @@
     "Database": {
         "Type": "SQL",
         "ORM": "Sequelize",
-        "Flavour": "MySQL"
+        "Flavour": "PostGreSQL"
     },
     "FileStorage": {
         "Provider": "AWS-S3"

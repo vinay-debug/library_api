@@ -29,8 +29,8 @@ export class ResponseHandler {
             Message: msg,
             HttpCode: httpErrorCode ? httpErrorCode : 500,
             Trace: trace_path,
-            User: request ? request.currentUser : null,
-            Context: request ? request.context : null,
+            User: null,
+            Context: 'request ? request.context : null',
             Request: {
                 Method: request ? request.method : null,
                 Host: request ? request.hostname : null,
@@ -73,8 +73,8 @@ export class ResponseHandler {
             HttpCode: httpCode ?? 200,
             Data: data ?? null,
             Trace: null,
-            User: request ? request.currentUser : null,
-            Context: request ? request.context : null,
+            User: null,
+            Context: 'request ? request.context : null',
             Request: {
                 Method: request ? request.method : null,
                 Host: request ? request.hostname : null,
@@ -89,10 +89,11 @@ export class ResponseHandler {
         };
 
         if (process.env.NODE_ENV !== 'test') {
+            const logObj = { ...responseObject };
             if (!logDataObject) {
-                responseObject.Data = null;
+                logObj.Data = null;
             }
-            Logger.instance().log(JSON.stringify(responseObject, null, 2));
+            Logger.instance().log(JSON.stringify(logObj, null, 2));
         }
 
         ActivityRecorder.record(responseObject);

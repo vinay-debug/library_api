@@ -1,4 +1,8 @@
+import { UserValidator } from 'api/validators/user.validator';
 import { Authorizer } from 'auth/authorizer';
+import { ResponseHandler } from 'common/response.handler';
+import { UserDomainModel } from 'domain.types/user/user.domain.model';
+import { UserDetailsDto } from 'domain.types/user/user.dto';
 import express from 'express';
 import { UserService } from 'services/user.service';
 import { Loader } from 'startup/loader';
@@ -30,6 +34,25 @@ export class UserController {
     };
 
     create = async (request: express.Request, response: express.Response): Promise<void> => {
-        throw new Error('Method not implemented.');
+        try {
+            // request.context = 'User.create';
+
+            const domainData: UserDomainModel = await UserValidator.create(request, response);
+
+            const userdetails: UserDetailsDto = await this._service.create(domainData);
+
+            ResponseHandler.success(
+                request,
+                response,
+                'User created!',
+                200,
+                {
+                    entity: userdetails,
+                },
+                false
+            );
+        } catch (err) {
+            ResponseHandler.handleError(request, response, err);
+        }
     };
 }

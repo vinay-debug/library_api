@@ -1,26 +1,29 @@
 /* eslint-disable indent */
 import {
+    BelongsTo,
     Column,
     CreatedAt,
     DataType,
     DeletedAt,
+    ForeignKey,
     IsUUID,
-    Length,
     Model,
     PrimaryKey,
     Table,
     UpdatedAt,
 } from 'sequelize-typescript';
 import { v4 } from 'uuid';
+import BookCopy from './book.copy.model';
+import User from './user.model';
 
 @Table({
     timestamps: true,
-    modelName: 'Person',
-    tableName: 'persons',
+    modelName: 'BookBorrowLog',
+    tableName: 'book_borrow_log',
     paranoid: true,
     freezeTableName: true,
 })
-export default class Author extends Model {
+export default class BookBorrowLog extends Model {
     @IsUUID(4)
     @PrimaryKey
     @Column({
@@ -32,33 +35,39 @@ export default class Author extends Model {
     })
     id: string;
 
-    @Length({ max: 16 })
+    @IsUUID(4)
+    @ForeignKey(() => BookCopy)
     @Column({
-        type: DataType.STRING(16),
-        allowNull: true,
-    })
-    Prefix: string;
-
-    @Length({ max: 70 })
-    @Column({
-        type: DataType.STRING(70),
+        type: DataType.UUID,
         allowNull: false,
     })
-    FirstName: string;
+    BookCopyId: string;
 
-    @Length({ max: 70 })
+    @BelongsTo(() => BookCopy)
+    BookCopy: BookCopy;
+
+    @IsUUID(4)
+    @ForeignKey(() => User)
     @Column({
-        type: DataType.STRING(70),
+        type: DataType.UUID,
+        allowNull: false,
+    })
+    BookBorrowedByUserId: string;
+
+    @BelongsTo(() => User)
+    BookBorrowerUser: User;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    BorrowedAt: Date;
+
+    @Column({
+        type: DataType.DATE,
         allowNull: true,
     })
-    MiddleName: string;
-
-    @Length({ max: 70 })
-    @Column({
-        type: DataType.STRING(70),
-        allowNull: true,
-    })
-    LastName: string;
+    ReturnedAt: Date;
 
     @Column
     @CreatedAt

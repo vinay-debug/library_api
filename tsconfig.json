@@ -19,6 +19,9 @@
         "diagnostics": true,
         "baseUrl": "./src",
         "rootDir": "./src",
+        "paths": {
+            "/*": ["src/*"]
+        },
         "typeRoots": ["@types", "node_modules/@types"]
     },
     "include": ["src/**/*"],
