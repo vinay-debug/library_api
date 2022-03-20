@@ -47,7 +47,7 @@ export class DatabaseConnector_Sequelize implements IDatabaseConnector {
             return true
         } catch (error) {
             Logger.instance().log(error.message)
-            return false
+            throw error
         }
     }
     sync(): Promise<boolean> {
