@@ -29,8 +29,8 @@ export class ResponseHandler {
             Message: msg,
             HttpCode: httpErrorCode ? httpErrorCode : 500,
             Trace: trace_path,
-            User: request ? request.currentUser : null,
-            Context: request ? request.context : null,
+            // User: request ? request.currentUser : null,
+            // Context: request ? request.context : null,
             Request: {
                 Method: request ? request.method : null,
                 Host: request ? request.hostname : null,
@@ -73,8 +73,8 @@ export class ResponseHandler {
             HttpCode: httpCode ?? 200,
             Data: data ?? null,
             Trace: null,
-            User: request ? request.currentUser : null,
-            Context: request ? request.context : null,
+            // User: request ? request.currentUser : null,
+            // Context: request ? request.context : null,
             Request: {
                 Method: request ? request.method : null,
                 Host: request ? request.hostname : null,
