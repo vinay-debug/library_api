@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { Loader } from '../../startup/loader';
 import { ResponseHandler } from 'common/response.handler';
 import { ApiError } from 'common/api.error';
+import { UserValidator } from 'api/validators/user.validator';
 
 export class UserController {
 
@@ -38,9 +39,20 @@ export class UserController {
             //         designation: 'software developer'
             //     }
             // };
+            const model = await UserValidator.create(request,response);
             const apiResponse = await this._service.create();
-            ResponseHandler.success(request, response, 'User created successfully!', 200, apiResponse )
-        }
+            ResponseHandler.success(
+                request,
+                response,
+                'User created successfully!',
+                200,
+                {
+                    entity: apiResponse,
+                    domainModel: model
+
+                }),
+                false
+            }
         catch (err) {
             ResponseHandler.handleError(request, response, err)
         }
