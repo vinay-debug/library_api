@@ -40,16 +40,14 @@ export class UserController {
             //     }
             // };
             const model = await UserValidator.create(request,response);
-            const apiResponse = await this._service.create();
+            const userdetails = await this._service.create(model);
             ResponseHandler.success(
                 request,
                 response,
                 'User created successfully!',
                 200,
                 {
-                    entity: apiResponse,
-                    domainModel: model
-
+                    entity: userdetails,
                 }),
                 false
             }
