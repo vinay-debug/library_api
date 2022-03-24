@@ -5,6 +5,7 @@ import { Logger } from '../common/logger';
 import { Authorizer } from '../auth/authorizer';
 import { DatabaseConnector } from '../database/database.connector';
 import { Injector } from './injector';
+import { Seeder } from './seeder';
 
 export class Loader {
     private static _container: DependencyContainer = container;
@@ -31,12 +32,20 @@ export class Loader {
         return Loader._authenticator;
     }
 
+    private static _seeder: Seeder = null;
+
+    public static get seeder() {
+        return Loader._seeder;
+    }
+
     public static init = async (): Promise<boolean> => {
         try {
             //Register injections here...
             Injector.registerInjections(container);
 
             Loader._databaseConnector = container.resolve(DatabaseConnector);
+
+            Loader._seeder = container.resolve(Seeder)
 
             return true;
         } catch (error) {
