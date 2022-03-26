@@ -49,6 +49,8 @@ export class Loader {
 
             Loader._authorizer = container.resolve(Authorizer);
 
+            Loader._authenticator = container.resolve(Authenticator);
+
             return true;
         } catch (error) {
             Logger.instance().log(error.message);
