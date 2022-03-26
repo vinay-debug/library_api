@@ -1,25 +1,29 @@
 import {
+    Table,
     Column,
-    CreatedAt,
+    Model,
     DataType,
+    CreatedAt,
+    UpdatedAt,
     DeletedAt,
     IsUUID,
-    Length,
-    Model,
     PrimaryKey,
-    Table,
-    UpdatedAt,
+    ForeignKey,
 } from 'sequelize-typescript';
+
 import { v4 } from 'uuid';
+import Role from './role.model';
+
+///////////////////////////////////////////////////////////////////////
 
 @Table({
     timestamps: true,
-    modelName: 'Role',
-    tableName: 'role',
+    modelName: 'RolePrivilege',
+    tableName: 'role_privileges',
     paranoid: true,
     freezeTableName: true,
 })
-export default class Role extends Model {
+export default class RolePrivilege extends Model {
     @IsUUID(4)
     @PrimaryKey
     @Column({
@@ -31,12 +35,18 @@ export default class Role extends Model {
     })
         id: string;
 
-    @Length({ max: 70 })
     @Column({
-        type: DataType.STRING(70),
+        type: DataType.STRING(256),
         allowNull: false,
     })
-        RoleName: string;
+        Privilege: string;
+
+    @ForeignKey(() => Role)
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+        RoleId: string;
 
     @Column
     @CreatedAt
