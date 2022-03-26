@@ -34,35 +34,35 @@ export default class User extends Model {
         allowNull: false,
         unique: true,
     })
-    id: string;
+        id: string;
 
     @Length({ max: 16 })
     @Column({
         type: DataType.STRING(16),
         allowNull: true,
     })
-    Prefix: string;
+        Prefix: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: false,
     })
-    FirstName: string;
+        FirstName: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: true,
     })
-    MiddleName: string;
+        MiddleName: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: true,
     })
-    LastName: string;
+        LastName: string;
 
     @Length({ max: 128 })
     @IsEmail
@@ -71,14 +71,14 @@ export default class User extends Model {
         allowNull: false,
         unique: true,
     })
-    Email: string;
+        Email: string;
 
     @Length({ min: 6, max: 256 })
     @Column({
         type: DataType.STRING(256),
         allowNull: false,
     })
-    Password: string;
+        Password: string;
 
     // @IsUUID(4)
     @ForeignKey(() => Role)
@@ -86,18 +86,18 @@ export default class User extends Model {
         type: DataType.UUID,
         allowNull: true,
     })
-    RoleId: string;
+        RoleId: string;
 
     @BelongsTo(() => Role)
-    Role: Role;
+        Role: Role;
 
     @Column
     @CreatedAt
-    CreatedAt: Date;
+        CreatedAt: Date;
 
     @UpdatedAt
-    UpdatedAt: Date;
+        UpdatedAt: Date;
 
     @DeletedAt
-    DeletedAt: Date;
+        DeletedAt: Date;
 }

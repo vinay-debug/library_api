@@ -49,10 +49,10 @@ export class UserController {
                 {
                     entity: userdetails,
                 }),
-                false
-            }
+            false;
+        }
         catch (err) {
-            ResponseHandler.handleError(request, response, err)
+            ResponseHandler.handleError(request, response, err);
         }
     };
 }

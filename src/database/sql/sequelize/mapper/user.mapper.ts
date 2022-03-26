@@ -13,7 +13,7 @@ export class UserMapper {
             CreatedAt: entity.createdAt,
             UpdatedAt: entity.deletedAt,
             DeletedAt: entity.deletedAt
-        }
+        };
         return dto;
-    }
+    };
 }

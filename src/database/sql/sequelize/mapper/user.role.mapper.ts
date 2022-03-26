@@ -7,7 +7,7 @@ export class RoleMapper {
         const dto: RoleDto = {
             id: role.id,
             RoleName: role.RoleName
-        }
+        };
         return dto;
     }
 

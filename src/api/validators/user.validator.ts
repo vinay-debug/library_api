@@ -21,13 +21,14 @@ export class UserValidator {
             }
 
             const createUserDomainModel: UserDomainModel = {
-                Prefix: request.body.prefix,
+                Prefix: request.body.Prefix,
                 FirstName: request.body.FirstName,
                 MiddleName: request.body.MiddleName,
                 LastName: request.body.LastName,
                 Email: request.body.Email,
                 Password: request.body.Password,
-                UserName: ''
+                UserName: '',
+                RoleId: request.body.RoleId ?? null,
             };
 
             return createUserDomainModel;
