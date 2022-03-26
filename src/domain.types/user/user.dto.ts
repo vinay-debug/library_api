@@ -5,7 +5,8 @@ export interface UserDetailsDto {
     MiddleName: string;
     LastName: string;
     Email: string;
-
+    RoleId: string;
+    
     CreatedAt: Date;
 
     UpdatedAt: Date;

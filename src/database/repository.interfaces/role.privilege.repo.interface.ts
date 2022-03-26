@@ -7,9 +7,9 @@ export interface IRolePrivilegeRepo {
 
     search(): Promise<RolePrivilegeDto[]>;
 
-    getPrivilegesForRole(roleId: number): Promise<RolePrivilegeDto[]>;
+    getPrivilegesForRole(roleId: string): Promise<RolePrivilegeDto[]>;
 
-    hasPrivilegeForRole(roleId: number, privilege: string): Promise<boolean>;
+    hasPrivilegeForRole(roleId: string, privilege: string): Promise<boolean>;
 
     delete(id: string): Promise<boolean>;
 }

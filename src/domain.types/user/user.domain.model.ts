@@ -7,3 +7,8 @@ export interface UserDomainModel {
     Password: string;
     RoleId: string;
 }
+
+export interface UserLoginDetails {
+    Email: string;
+    Password: string;
+}
