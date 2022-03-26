@@ -9,6 +9,18 @@ import User from "../models/user.model";
 
 export class UserRepo implements IUserRepo {
 
+    getById = async (userId: string): Promise<UserDetailsDto> => {
+        const user: User = await User.findOne({
+            where: {
+                id: userId,
+            },
+        });
+
+        const details: UserDetailsDto = await UserMapper.toDetailsDto(user);
+
+        return details;
+    };
+
     async getUserHashedPassword(userId: string): Promise<string> {
         const user: User = await User.findOne({
             where: {

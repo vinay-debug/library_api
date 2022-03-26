@@ -6,6 +6,7 @@ import { ResponseHandler } from 'common/response.handler';
 import { ApiError } from 'common/api.error';
 import { UserValidator } from 'api/validators/user.validator';
 import { UserLoginDetails } from 'domain.types/user/user.domain.model';
+import { UserDetailsDto } from 'domain.types/user/user.dto';
 
 export class UserController {
 
@@ -54,7 +55,25 @@ export class UserController {
     };
 
     getById = async (request: express.Request, response: express.Response): Promise<void> => {
-        throw new ApiError(500, 'Cannot create user!');
+        try {
+
+            const userId: string = await UserValidator.get(request, response);
+
+            const userdetails: UserDetailsDto = await this._service.getById(userId);
+
+            ResponseHandler.success(
+                request,
+                response,
+                'User retrived successfully by id!',
+                200,
+                {
+                    entity: userdetails,
+                },
+                true
+            );
+        } catch (err) {
+            ResponseHandler.handleError(request, response, err);
+        }
     };
 
     search = async (request: express.Request, response: express.Response): Promise<void> => {
