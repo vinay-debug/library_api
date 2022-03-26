@@ -1,5 +1,6 @@
 import { Logger } from "common/logger";
 import { IRoleRepo } from "database/repository.interfaces/user.role.repo.interface";
+import { RoleDto } from "domain.types/role/role.dto";
 import { Roles } from "domain.types/role/role.types";
 import { inject, injectable } from "tsyringe";
 
@@ -13,13 +14,17 @@ export class Seeder {
             
             await this.seedDefaultRoles();
             
-
         } catch (error) {
             Logger.instance().log(error.message);
         }
     };
 
     seedDefaultRoles = async () => {
+
+        const existing: RoleDto[] = await this._roleRepo.search();
+        if (existing.length > 0) {
+            return;
+        }
 
         await this._roleRepo.create({
             RoleName: Roles.Admin,
@@ -28,6 +33,6 @@ export class Seeder {
         await this._roleRepo.create({
             RoleName: Roles.User,
         });
-    }
+    };
 
 }

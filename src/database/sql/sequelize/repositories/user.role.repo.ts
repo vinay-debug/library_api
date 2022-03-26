@@ -7,9 +7,16 @@ import { RoleMapper } from "../mapper/user.role.mapper";
 import Role from "../models/role.model";
 
 export class UserRoleRepo implements IRoleRepo {
-    search(): Promise<RoleDto[]> {
-        throw new Error("Method not implemented.");
-    }
+    search = async (): Promise<RoleDto[]> => {
+        try {
+            const role: Role[] = await Role.findAll();
+            const dto: RoleDto[] = role.map((userRole) => RoleMapper.toDto(userRole));
+            return dto;
+        } catch (error) {
+            Logger.instance().log(error.message);
+            throw new ApiError(500, error.message);
+        }
+    };
 
     create = async (roleEntity: any): Promise<RoleDto> => {
         try {
