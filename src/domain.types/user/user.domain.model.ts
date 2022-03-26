@@ -5,6 +5,5 @@ export interface UserDomainModel {
     LastName: string;
     Email: string;
     Password: string;
-    UserName: string;
     RoleId: string;
 }
