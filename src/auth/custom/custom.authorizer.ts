@@ -28,7 +28,14 @@ export class CustomAuthorizer implements IAuthorizer {
             if (currentUser == null) {
                 return false;
             }
+            const hasPrivilege = await this._rolePrivilegeService.hasPrivilegeForRole(
+                currentUser.CurrentRoleId,
+                context
+            );
 
+            if (!hasPrivilege) {
+                return false;
+            }
             const isResourceOwner = await this.isResourceOwner(currentUser, request);
             const hasConsent = await this.hasConsent(currentUser.CurrentRoleId, context);
             if (hasConsent || isResourceOwner) {

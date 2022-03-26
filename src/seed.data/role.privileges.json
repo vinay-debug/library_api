@@ -1,0 +1,10 @@
+[
+    {
+        "Role": "User",
+        "Privileges": ["User.getById"]
+    },
+    {
+        "Role": "Admin",
+        "Privileges": ["User.getById", "User.create"]
+    }
+]
