@@ -12,6 +12,11 @@ import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class UserService {
+    getById = async (userId: string): Promise<UserDetailsDto> => {
+        const userDetailsDto: UserDetailsDto = await this._userRepo.getById(userId);
+
+        return userDetailsDto;
+    };
 
     constructor(
         @inject('IUserRepo') private _userRepo: IUserRepo,
