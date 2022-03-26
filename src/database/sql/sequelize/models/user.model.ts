@@ -1,4 +1,7 @@
+import { Helper } from 'common/helper';
 import {
+    BeforeCreate,
+    BeforeUpdate,
     BelongsTo,
     Column,
     CreatedAt,
@@ -79,6 +82,12 @@ export default class User extends Model {
         allowNull: false,
     })
         Password: string;
+
+    @BeforeCreate
+    @BeforeUpdate
+    static encryptPassword(client) {
+        client.Password = Helper.hash(client.Password);
+    }
 
     @IsUUID(4)
     @ForeignKey(() => Role)

@@ -1,4 +1,5 @@
 import { InputValidationError } from './input.validation.error';
+import { genSaltSync, hashSync } from 'bcryptjs';
 
 export class Helper {
     static handleValidationError = (result) => {
@@ -9,5 +10,11 @@ export class Helper {
             index++;
         }
         throw new InputValidationError(errorMessages);
+    };
+
+    public static hash = (str: string) => {
+        const salt = genSaltSync(8);
+        const hashed = hashSync(str, salt);
+        return hashed;
     };
 }
