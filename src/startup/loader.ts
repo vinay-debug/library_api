@@ -9,8 +9,8 @@ import { Seeder } from './seeder';
 
 export class Loader {
     private static _container: DependencyContainer = container;
-    private static _databaseConnector: DatabaseConnector = null;
 
+    private static _databaseConnector: DatabaseConnector = null;
 
     public static get container() {
         return Loader._container;
@@ -45,7 +45,9 @@ export class Loader {
 
             Loader._databaseConnector = container.resolve(DatabaseConnector);
 
-            Loader._seeder = container.resolve(Seeder)
+            Loader._seeder = container.resolve(Seeder);
+
+            Loader._authorizer = container.resolve(Authorizer);
 
             return true;
         } catch (error) {

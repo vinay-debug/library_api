@@ -5,8 +5,39 @@ import { Loader } from '../../startup/loader';
 import { ResponseHandler } from 'common/response.handler';
 import { ApiError } from 'common/api.error';
 import { UserValidator } from 'api/validators/user.validator';
+import { UserLoginDetails } from 'domain.types/user/user.domain.model';
 
 export class UserController {
+
+    loginWithPassword = async (request: express.Request, response: express.Response): Promise<void> => {
+        try {
+            // request.context = 'User.create';
+
+            const domainData: UserLoginDetails = await UserValidator.loginWithPassword(request, response);
+
+            const userdetails = await this._service.loginWithPassword(domainData);
+
+            const message = `User '${userdetails.user.FirstName}' logged in successfully!`;
+
+            const data = {
+                AccessToken: userdetails.accessToken,
+                User: userdetails.user,
+            };
+
+            ResponseHandler.success(
+                request,
+                response,
+                message,
+                200,
+                {
+                    entity: data,
+                },
+                true
+            );
+        } catch (err) {
+            ResponseHandler.handleError(request, response, err);
+        }
+    };
 
     //#region member variables and constructors
 
@@ -49,10 +80,10 @@ export class UserController {
                 {
                     entity: userdetails,
                 }),
-                false
-            }
+            false;
+        }
         catch (err) {
-            ResponseHandler.handleError(request, response, err)
+            ResponseHandler.handleError(request, response, err);
         }
     };
 }

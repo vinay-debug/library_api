@@ -16,11 +16,11 @@ export class RolePrivilegeService {
         return await this._rolePrivilegeRepo.getById(id);
     };
 
-    getPrivilegesForRole = async (roleId: number): Promise<RolePrivilegeDto[]> => {
+    getPrivilegesForRole = async (roleId: string): Promise<RolePrivilegeDto[]> => {
         return await this._rolePrivilegeRepo.getPrivilegesForRole(roleId);
     };
 
-    hasPrivilegeForRole = async (roleId: number, privilege: string): Promise<boolean> => {
+    hasPrivilegeForRole = async (roleId: string, privilege: string): Promise<boolean> => {
         return await this._rolePrivilegeRepo.hasPrivilegeForRole(roleId, privilege);
     };
 
