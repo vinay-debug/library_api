@@ -26,7 +26,25 @@ export class UserController extends BaseController {
     //#endregion
 
     delete = async (request: express.Request, response: express.Response): Promise<void> => {
-        throw new ApiError(500, 'Cannot create user!');
+        try {
+            await this.setContext('User.Delete', request, response);
+
+            const userId: string = await UserValidator.delete(request, response);
+
+            const deleted = await this._service.delete(userId);
+            if (!deleted) {
+                throw new ApiError(400, 'User  details cannot be deleted.');
+            }
+
+            ResponseHandler.success(
+                request,
+                response,
+                'User  deleted successfully!', 200, {
+                    Deleted : true,
+                });
+        } catch (error) {
+            ResponseHandler.handleError(request, response, error);
+        }
     };
 
     getById = async (request: express.Request, response: express.Response): Promise<void> => {
@@ -53,7 +71,26 @@ export class UserController extends BaseController {
     };
 
     search = async (request: express.Request, response: express.Response): Promise<void> => {
-        throw new ApiError(500, 'Cannot create user!');
+        try {
+            await this.setContext('User.Search', request, response);
+
+            const filters = await UserValidator.search(request,response);
+           
+            const searchResults = await this._service.search(filters);
+
+            const count = searchResults.Items.length;
+
+            const message =
+                count === 0
+                    ? 'No records found!'
+                    : `Total ${count} user  details records retrieved successfully!`;
+                    
+            ResponseHandler.success(request, response, message, 200, {
+                UserDetailsRecord : searchResults });
+
+        } catch (error) {
+            ResponseHandler.handleError(request, response, error);
+        }
     };
 
     create = async (request: express.Request, response: express.Response) => {
@@ -65,7 +102,7 @@ export class UserController extends BaseController {
                 request,
                 response,
                 'User created successfully!',
-                200,
+                201,
                 {
                     entity: userdetails,
                 }),

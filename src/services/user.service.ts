@@ -7,16 +7,12 @@ import { RoleDto } from 'domain.types/role/role.dto';
 import { Roles } from 'domain.types/role/role.types';
 import { UserDomainModel, UserLoginDetails } from 'domain.types/user/user.domain.model';
 import { UserDetailsDto } from 'domain.types/user/user.dto';
+import { UserSearchFilters, UserSearchResults } from 'domain.types/user/user.search.types';
 import { Loader } from 'startup/loader';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class UserService {
-    getById = async (userId: string): Promise<UserDetailsDto> => {
-        const userDetailsDto: UserDetailsDto = await this._userRepo.getById(userId);
-
-        return userDetailsDto;
-    };
 
     constructor(
         @inject('IUserRepo') private _userRepo: IUserRepo,
@@ -60,5 +56,25 @@ export class UserService {
         const accessToken = await Loader.authorizer.generateUserSessionToken(currentUser);
 
         return { user: user, accessToken: accessToken };
+    };
+
+    getById = async (userId: string): Promise<UserDetailsDto> => {
+        const userDetailsDto: UserDetailsDto = await this._userRepo.getById(userId);
+
+        return userDetailsDto;
+    };
+
+    search = async (filters: UserSearchFilters): Promise<UserSearchResults> => {
+        const items = [];
+        const results = await this._userRepo.search(filters);
+        for await (const dto of results.Items) {
+            items.push(dto);
+        }
+        results.Items = items;
+        return results;
+    };
+
+    delete = async (userId: string): Promise<boolean> => {
+        return await this._userRepo.delete(userId);
     };
 }

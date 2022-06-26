@@ -1,13 +1,18 @@
 [
     {
         "Role": "User",
-        "Privileges": ["User.getById"]
+        "Privileges": [
+            "User.getById",
+            "User.Search"
+        ]
     },
     {
         "Role": "Admin",
         "Privileges": [
             "User.getById",
-            "User.create"
+            "User.create",
+            "User.Search",
+            "User.Delete"
         ]
     }
 ]
