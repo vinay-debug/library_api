@@ -7,353 +7,1018 @@
 	"item": [
 		{
 			"name": "health check",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7272/api/v1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7272",
-					"path": [
-						"api",
-						"v1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "user login",
-			"event": [
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonRes = pm.response.json();\r",
-							"pm.environment.set(\"AccessToken\", jsonRes.Data.entity.AccessToken);\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"Email\": \"Kiran.kharade@yopmail.com\",\r\n    \"Password\": \"Test@123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "health check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7272/api/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7272/api/v1/auth/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7272",
-					"path": [
-						"api",
-						"v1",
-						"auth",
-						"login"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "create user",
-			"event": [
+			"name": "User",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"try {\r",
-							"    var jsonRes = pm.response.json();\r",
-							"    pm.environment.set(\"USER_ID\", jsonRes.Data.entity.id);\r",
-							"\r",
-							"}\r",
-							"catch (error) {\r",
-							"    console.log(error.message);\r",
-							"}\r",
-							"\r",
-							"pm.test(\"Request is successfull\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"    var jsonRes = pm.response.json();\r",
-							"    pm.expect(jsonRes.Status).to.eql('success');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"User is created\", function () {\r",
-							"    var jsonRes = pm.response.json();\r",
-							"    pm.expect(jsonRes.Data.entity.RoleId).to.not.be.empty;\r",
-							"    pm.expect(jsonRes.Data.entity.Email).to.not.be.empty;\r",
-							"    pm.expect(jsonRes.Data.entity).to.have.property('id');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "Bearer {{AccessToken}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"Prefix\": \"Mr\",\r\n    \"FirstName\": \"Raj\",\r\n    \"MiddleName\": \"kirti\",\r\n    \"LastName\": \"baranwal\",\r\n    \"Email\": \"bmm1011@iitrpr.ac.in\",\r\n    \"Password\": \"2020bmm1015\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "user login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonRes = pm.response.json();\r",
+									"pm.environment.set(\"AccessToken\", jsonRes.Data.entity.AccessToken);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7272/api/v1/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
 					],
-					"port": "7272",
-					"path": [
-						"api",
-						"v1",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get by id user",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "Bearer {{AccessToken}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7272",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"{{USER_ID}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search patients",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Request is successfull\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"    var jsonRes = pm.response.json();\r",
-							"    pm.expect(jsonRes.Status).to.eql('success');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"List of users is returned\", function () {\r",
-							"\r",
-							"    var jsonRes = pm.response.json();\r",
-							"    pm.expect(jsonRes.Data).to.have.property('Patients');\r",
-							"    pm.expect(jsonRes.Data.Patients.Items.length).to.be.greaterThan(0);\r",
-							"\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "Bearer {{AccessToken}}",
-						"type": "text",
-						"description": "User login session token (JWT). Format : Bearer JWT_TOKEN"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/patients/search?orderBy=Email&order=ascending&pageIndex=0&itemsPerPage=25",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"patients",
-						"search"
-					],
-					"query": [
-						{
-							"key": "phone",
-							"value": "{{PATIENT_PHONE_NUMBER}}",
-							"description": "Search by patient phone",
-							"disabled": true
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"Kiran.kharade@yopmail.com\",\r\n    \"Password\": \"Test@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "email",
-							"value": "{{PATIENT_EMAIL}}",
-							"description": "Search by patient email",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "{{PATIENT_FIRST_NAME}}",
-							"description": "Search by name",
-							"disabled": true
-						},
-						{
-							"key": "gender",
-							"value": "{{PATIENT_GENDER}}",
-							"description": "Search by patient gender",
-							"disabled": true
-						},
-						{
-							"key": "birthdateFrom",
-							"value": "1975-01-01",
-							"description": "Date in format: YYYY-MM-DD. Start of the range for birthdate based search",
-							"disabled": true
-						},
-						{
-							"key": "birthdateTo",
-							"value": "2021-12-12",
-							"description": "Date in format: YYYY-MM-DD. End of the range for birthdate based search",
-							"disabled": true
-						},
-						{
-							"key": "createdDateFrom",
-							"value": "2021-05-01",
-							"description": "Date in format: YYYY-MM-DD. Start of the range for creation date based search",
-							"disabled": true
-						},
-						{
-							"key": "createdDateTo",
-							"value": "2021-12-12",
-							"description": "Date in format: YYYY-MM-DD. End of the range for creation date based search",
-							"disabled": true
-						},
-						{
-							"key": "orderBy",
-							"value": "Email",
-							"description": "The name of the parameter to order by"
-						},
-						{
-							"key": "order",
-							"value": "ascending",
-							"description": "'ascending' or 'descending'"
-						},
-						{
-							"key": "pageIndex",
-							"value": "0",
-							"description": "Page index for pagination"
-						},
-						{
-							"key": "itemsPerPage",
-							"value": "25",
-							"description": "Items per page"
+						"url": {
+							"raw": "http://localhost:7272/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"description": "Search addresses using query parameters."
-			},
-			"response": []
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.environment.set(\"USER_ID\", jsonRes.Data.entity.id);\r",
+									"\r",
+									"}\r",
+									"catch (error) {\r",
+									"    console.log(error.message);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User is created\", function () {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data.entity.RoleId).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity.Email).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity).to.have.property('id');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Prefix\": \"Mr\",\r\n    \"FirstName\": \"Raj\",\r\n    \"MiddleName\": \"kirti\",\r\n    \"LastName\": \"baranwal\",\r\n    \"Email\": \"bmm1011@iitrpr.ac.in\",\r\n    \"Password\": \"2020bmm1015\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{USER_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search patients",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"List of users is returned\", function () {\r",
+									"\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data).to.have.property('Patients');\r",
+									"    pm.expect(jsonRes.Data.Patients.Items.length).to.be.greaterThan(0);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text",
+								"description": "User login session token (JWT). Format : Bearer JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/patients/search?orderBy=Email&order=ascending&pageIndex=0&itemsPerPage=25",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"patients",
+								"search"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "{{PATIENT_PHONE_NUMBER}}",
+									"description": "Search by patient phone",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "{{PATIENT_EMAIL}}",
+									"description": "Search by patient email",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{PATIENT_FIRST_NAME}}",
+									"description": "Search by name",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{PATIENT_GENDER}}",
+									"description": "Search by patient gender",
+									"disabled": true
+								},
+								{
+									"key": "birthdateFrom",
+									"value": "1975-01-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "birthdateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateFrom",
+									"value": "2021-05-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for creation date based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for creation date based search",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "Email",
+									"description": "The name of the parameter to order by"
+								},
+								{
+									"key": "order",
+									"value": "ascending",
+									"description": "'ascending' or 'descending'"
+								},
+								{
+									"key": "pageIndex",
+									"value": "0",
+									"description": "Page index for pagination"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "25",
+									"description": "Items per page"
+								}
+							]
+						},
+						"description": "Search addresses using query parameters."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Status).to.eql('success');",
+									"});",
+									"pm.test(\"User record is deleted\", function () {",
+									"    var expectedValue = true;",
+									"    ",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Data).to.have.property('Deleted');",
+									"    pm.expect(jsonRes.Data.Deleted).equals(expectedValue);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{USER_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "Delete User",
-			"event": [
+			"name": "Author",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Request is successfull\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var jsonRes = pm.response.json();",
-							"    pm.expect(jsonRes.Status).to.eql('success');",
-							"});",
-							"pm.test(\"User record is deleted\", function () {",
-							"    var expectedValue = true;",
-							"    ",
-							"    var jsonRes = pm.response.json();",
-							"    pm.expect(jsonRes.Data).to.have.property('Deleted');",
-							"    pm.expect(jsonRes.Data.Deleted).equals(expectedValue);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "Bearer {{AccessToken}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
+					"name": "create author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.environment.set(\"AUTHOR_ID\", jsonRes.Data.entity.id);\r",
+									"\r",
+									"}\r",
+									"catch (error) {\r",
+									"    console.log(error.message);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"author is created\", function () {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data.entity.RoleId).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity.Email).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity).to.have.property('id');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"port": "7272",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"{{USER_ID}}"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FirstName\": \"Om Prakash\",\r\n    \"LastName\": \"Tandon\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/authors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by author id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{USER_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search author",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"List of users is returned\", function () {\r",
+									"\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data).to.have.property('Patients');\r",
+									"    pm.expect(jsonRes.Data.Patients.Items.length).to.be.greaterThan(0);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text",
+								"description": "User login session token (JWT). Format : Bearer JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/patients/search?orderBy=Email&order=ascending&pageIndex=0&itemsPerPage=25",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"patients",
+								"search"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "{{PATIENT_PHONE_NUMBER}}",
+									"description": "Search by patient phone",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "{{PATIENT_EMAIL}}",
+									"description": "Search by patient email",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{PATIENT_FIRST_NAME}}",
+									"description": "Search by name",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{PATIENT_GENDER}}",
+									"description": "Search by patient gender",
+									"disabled": true
+								},
+								{
+									"key": "birthdateFrom",
+									"value": "1975-01-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "birthdateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateFrom",
+									"value": "2021-05-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for creation date based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for creation date based search",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "Email",
+									"description": "The name of the parameter to order by"
+								},
+								{
+									"key": "order",
+									"value": "ascending",
+									"description": "'ascending' or 'descending'"
+								},
+								{
+									"key": "pageIndex",
+									"value": "0",
+									"description": "Page index for pagination"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "25",
+									"description": "Items per page"
+								}
+							]
+						},
+						"description": "Search addresses using query parameters."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Status).to.eql('success');",
+									"});",
+									"pm.test(\"User record is deleted\", function () {",
+									"    var expectedValue = true;",
+									"    ",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Data).to.have.property('Deleted');",
+									"    pm.expect(jsonRes.Data.Deleted).equals(expectedValue);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/users/{{USER_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{USER_ID}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "create book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.environment.set(\"BOOK_ID\", jsonRes.Data.entity.id);\r",
+									"\r",
+									"}\r",
+									"catch (error) {\r",
+									"    console.log(error.message);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"book is created\", function () {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data.entity.RoleId).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity.Email).to.not.be.empty;\r",
+									"    pm.expect(jsonRes.Data.entity).to.have.property('id');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\"       : \"Organic chemistry\",\r\n    \"Summary\"    : \"IIT Jee advance book for organicchemistry\",\r\n    \"PublishedAt\": \"2020-12-10\",\r\n    \"AuthorId\"   :{{AUTHOR_ID}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by book id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books/{{BOOK_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"{{BOOK_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search book",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Status).to.eql('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"List of users is returned\", function () {\r",
+									"\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.expect(jsonRes.Data).to.have.property('Patients');\r",
+									"    pm.expect(jsonRes.Data.Patients.Items.length).to.be.greaterThan(0);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text",
+								"description": "User login session token (JWT). Format : Bearer JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "{{PATIENT_PHONE_NUMBER}}",
+									"description": "Search by patient phone",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "{{PATIENT_EMAIL}}",
+									"description": "Search by patient email",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{PATIENT_FIRST_NAME}}",
+									"description": "Search by name",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{PATIENT_GENDER}}",
+									"description": "Search by patient gender",
+									"disabled": true
+								},
+								{
+									"key": "birthdateFrom",
+									"value": "1975-01-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "birthdateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for birthdate based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateFrom",
+									"value": "2021-05-01",
+									"description": "Date in format: YYYY-MM-DD. Start of the range for creation date based search",
+									"disabled": true
+								},
+								{
+									"key": "createdDateTo",
+									"value": "2021-12-12",
+									"description": "Date in format: YYYY-MM-DD. End of the range for creation date based search",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Search addresses using query parameters."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successfull\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Status).to.eql('success');",
+									"});",
+									"pm.test(\"User record is deleted\", function () {",
+									"    var expectedValue = true;",
+									"    ",
+									"    var jsonRes = pm.response.json();",
+									"    pm.expect(jsonRes.Data).to.have.property('Deleted');",
+									"    pm.expect(jsonRes.Data.Deleted).equals(expectedValue);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books/{{BOOK_ID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"{{BOOK_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book borrow",
+			"item": [
+				{
+					"name": "Create book  copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {\r",
+									"    var jsonRes = pm.response.json();\r",
+									"    pm.environment.set(\"BOOK_COPY_ID\", jsonRes.Data.entity.id);\r",
+									"\r",
+									"}\r",
+									"catch (error) {\r",
+									"    console.log(error.message);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"BookId\"     : \"{{BOOK_Id}}\",\r\n    \"PublishedOn\": \"2020-12-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books-copy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books-copy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create borrow book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{AccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"BookBorrowedByUserId\": \"{{USER_ID}}\",\r\n    \"BookCopyId\": \"{{BOOK_COPY_ID}}\",\r\n    \"BorrowedAt\": \"2020-06-26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7272/api/v1/books-borrow-log",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7272",
+							"path": [
+								"api",
+								"v1",
+								"books-borrow-log"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
