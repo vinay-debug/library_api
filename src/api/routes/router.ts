@@ -1,7 +1,11 @@
 import express from 'express';
 import { Logger } from '../../common/logger';
 import { register as userRegister } from './user.routes';
+import { register as authorRegister } from './author.routes';
+import { register as bookCopyRegister } from './book.copy.routes';
+import { register as bookBorrowLogRegister } from './book.borrow.log.routes';
 import { register as userAuthLogin } from './auth.routes';
+import { register as bookRegister } from './book.routes';
 
 export class Router {
     private _app = null;
@@ -21,6 +25,10 @@ export class Router {
                 });
 
                 userRegister(this._app);
+                bookRegister(this._app);
+                bookCopyRegister(this._app);
+                bookBorrowLogRegister(this._app);
+                authorRegister(this._app);
                 userAuthLogin(this._app);
 
                 resolve(true);

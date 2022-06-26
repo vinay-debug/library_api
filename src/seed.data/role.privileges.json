@@ -3,7 +3,15 @@
         "Role": "User",
         "Privileges": [
             "User.getById",
-            "User.Search"
+            "User.Search",
+            "Book.GetById",
+            "Book.Create",
+            "Book.Search",
+            "BookBorrowLog.GetById",
+            "BookCopy.GetById",
+            "BookCopy.Search",
+            "Author.GetById",
+            "Author.Search"
         ]
     },
     {
@@ -12,7 +20,22 @@
             "User.getById",
             "User.create",
             "User.Search",
-            "User.Delete"
+            "User.Delete",
+            "Author.Create",
+            "Author.GetById",
+            "Author.Search",
+            "Author.Delete",
+            "Book.GetById",
+            "Book.Create",
+            "Book.Search",
+            "Book.Delete",
+            "BookCopy.Create",
+            "BookCopy.GetById",
+            "BookCopy.Search",
+            "BookCopy.Delete",
+            "BookBorrowLog.Create",
+            "BookBorrowLog.GetById",
+            "BookBorrowLog.Delete"
         ]
     }
 ]

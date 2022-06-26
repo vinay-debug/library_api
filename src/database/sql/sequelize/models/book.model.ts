@@ -25,21 +25,21 @@ export default class Book extends Model {
         defaultValue : () => { return v4(); },
         allowNull    : false
     })
-    id: string;
+        id: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull : false,
     })
-    Name: string;
+        Name: string;
 
     @Length({ min: 10, max: 13 })
     @Column({
         type: DataType.STRING(70),
         allowNull : true,
     })
-    ISBN: string;
+        ISBN: string;
 
     @IsUUID(4)
     @ForeignKey(() => Author)
@@ -47,34 +47,33 @@ export default class Book extends Model {
         type      : DataType.UUID,
         allowNull : false,
     })
-    AuthorId: string;
+        AuthorId: string;
 
     @BelongsTo(() => Author)
-    Author: Author;
-
+        Author: Author;
 
     @Length({ max: 100 })
     @Column({
         type      : DataType.STRING(100),
         allowNull : true
     })
-    Summary: string;
+        Summary: string;
 
     @IsDate
     @Column({
         type      : DataType.DATE,
         allowNull : false
     })
-    PublishedOn: Date;
+        PublishedAt: Date;
 
     @Column
     @CreatedAt
-    CreatedAt: Date;
+        CreatedAt: Date;
 
     @UpdatedAt
-    UpdatedAt: Date;
+        UpdatedAt: Date;
 
     @DeletedAt
-    DeletedAt: Date;
+        DeletedAt: Date;
 
 }

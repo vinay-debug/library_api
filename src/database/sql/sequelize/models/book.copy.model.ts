@@ -2,7 +2,7 @@ import {
     BelongsTo,
     Column, CreatedAt, DataType, DeletedAt,
     ForeignKey,IsDate,
-    IsUUID, Length, Model, PrimaryKey, Table, UpdatedAt
+    IsUUID, Model, PrimaryKey, Table, UpdatedAt
 } from 'sequelize-typescript';
 import { v4 } from 'uuid';
 import Book from './book.model';
@@ -25,7 +25,7 @@ export default class BookCopy extends Model {
         defaultValue : () => { return v4(); },
         allowNull    : false
     })
-    id: string;
+        id: string;
 
     @IsUUID(4)
     @ForeignKey(() => Book)
@@ -33,26 +33,26 @@ export default class BookCopy extends Model {
         type      : DataType.UUID,
         allowNull : false,
     })
-    BookId: string;
+        BookId: string;
 
     @BelongsTo(() => Book)
-    Book: Book;
+        Book: Book;
 
     @IsDate
     @Column({
         type      : DataType.DATE,
         allowNull : true
     })
-    PublishedOn: Date;
+        PublishedOn: Date;
 
     @Column
     @CreatedAt
-    CreatedAt: Date;
+        CreatedAt: Date;
 
     @UpdatedAt
-    UpdatedAt: Date;
+        UpdatedAt: Date;
 
     @DeletedAt
-    DeletedAt: Date;
+        DeletedAt: Date;
 
 }

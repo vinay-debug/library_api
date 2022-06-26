@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import {
     BelongsTo,
     Column,
@@ -32,7 +33,7 @@ export default class BookBorrowLog extends Model {
         },
         allowNull: false,
     })
-        id: string;
+    id: string;
 
     @IsUUID(4)
     @ForeignKey(() => BookCopy)
@@ -40,10 +41,10 @@ export default class BookBorrowLog extends Model {
         type: DataType.UUID,
         allowNull: false,
     })
-        BookCopyId: string;
+    BookCopyId: string;
 
     @BelongsTo(() => BookCopy)
-        BookCopy: BookCopy;
+    BookCopy: BookCopy;
 
     @IsUUID(4)
     @ForeignKey(() => User)
@@ -51,30 +52,30 @@ export default class BookBorrowLog extends Model {
         type: DataType.UUID,
         allowNull: false,
     })
-        BookBorrowedByUserId: string;
+    UserId: string;
 
     @BelongsTo(() => User)
-        BookBorrowerUser: User;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-    })
-        BorrowedAt: Date;
+    User: User;
 
     @Column({
         type: DataType.DATE,
         allowNull: true,
     })
-        ReturnedAt: Date;
+    BorrowedAt: Date;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: true,
+    })
+    ReturnedAt:Date ;
 
     @Column
     @CreatedAt
-        CreatedAt: Date;
-
+    CreatedAt: Date;
+ 
     @UpdatedAt
-        UpdatedAt: Date;
+    UpdatedAt: Date;
 
     @DeletedAt
-        DeletedAt: Date;
+    DeletedAt: Date;
 }
