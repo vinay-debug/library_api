@@ -59,7 +59,7 @@ export class BookCopyController extends BaseController {
                 request,
                 response,
                 'BookCopy Created!',
-                200,
+                201,
                 {
                     entity: bookCopydetails,
                     

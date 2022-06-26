@@ -76,7 +76,7 @@ export class AuthorController extends BaseController {
                 request,
                 response,
                 'Author created!',
-                200,
+                201,
                 {
                     entity: authordetails,
                     
