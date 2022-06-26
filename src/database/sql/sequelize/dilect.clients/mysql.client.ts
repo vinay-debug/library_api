@@ -1,6 +1,6 @@
 import { Logger } from "../../../../common/logger";
 import { DbConfig } from "../database.config";
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 export class MysqlClient {
 

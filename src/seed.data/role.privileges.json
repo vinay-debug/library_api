@@ -5,6 +5,9 @@
     },
     {
         "Role": "Admin",
-        "Privileges": ["User.getById", "User.create"]
+        "Privileges": [
+            "User.getById",
+            "User.create"
+        ]
     }
 ]
