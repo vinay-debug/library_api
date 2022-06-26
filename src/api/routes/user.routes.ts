@@ -9,7 +9,7 @@ export const register = (app: express.Application): void => {
     const authenticator = Loader.authenticator;
     const controller = new UserController();
 
-    router.post('/', controller.create);
+    router.post('/',authenticator.authenticateUser, controller.create);
     // router.get('/', authenticator.authenticateUser, controller.search);
     router.get('/:id',authenticator.authenticateUser, controller.getById);
     // router.delete('/:id', authenticator.authenticateUser, controller.delete);
