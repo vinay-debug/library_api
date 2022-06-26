@@ -26,7 +26,7 @@ export class BookBorrowLogValidator {
     static create = async (request: express.Request, response: express.Response): Promise<BookBorrowLogDomainModel> => {
         try {
             
-            await body('UserId').isString()
+            await body('BookBorrowedByUserId').isString()
                 .notEmpty()
                 .trim()
                 .run(request);
@@ -35,6 +35,8 @@ export class BookBorrowLogValidator {
                 .notEmpty()
                 .trim()
                 .run(request);
+            await body('BorrowedAt').trim()
+                .run(request);
 
             const result = validationResult(request);
             if (!result.isEmpty()) {
@@ -42,8 +44,9 @@ export class BookBorrowLogValidator {
             }
 
             const createBookBorrowLogDomainModel: BookBorrowLogDomainModel = {
-                UserId: request.body.UserId,
+                BookBorrowedByUserId: request.body.BookBorrowedByUserId,
                 BookCopyId: request.body.BookCopyId,
+                BorrowedAt: request.body.BorrowedAt,
             };
 
             return createBookBorrowLogDomainModel;

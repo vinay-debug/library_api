@@ -8,7 +8,7 @@ export class BookBorrowLogMapper {
         }
         const dto: BookBorrowLogDetailsDto = {
             id:entity.id,
-            UserId:entity.UserId,
+            BookBorrowedByUserId:entity.BookBorrowedByUserId,
             BookCopyId:entity.BookCopyId,
             BorrowedAt: entity.BorrowedAt,
             ReturnedAt: entity.ReturnedAt

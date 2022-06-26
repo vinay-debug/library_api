@@ -23,8 +23,9 @@ export class BookBorrowLogRepo implements IBookBorrowLogRepo {
     async createBookBorrowLog(bookBorrowLogDetails: BookBorrowLogDomainModel):Promise<BookBorrowLogDetailsDto>    {
 
         const entity = {
-            UserId:bookBorrowLogDetails.UserId,
-            BookCopyId:bookBorrowLogDetails.BookCopyId,
+            BookBorrowedByUserId:bookBorrowLogDetails.BookBorrowedByUserId,
+            BookCopyId          :bookBorrowLogDetails.BookCopyId,
+            BorrowedAt          :bookBorrowLogDetails.BorrowedAt ? bookBorrowLogDetails.BorrowedAt : new Date(),
         };
     
         const bookBorrowLog: BookBorrowLog = await BookBorrowLog.create(entity);

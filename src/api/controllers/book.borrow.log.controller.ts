@@ -55,7 +55,7 @@ export class BookBorrowLogController extends BaseController {
                 request,
                 response,
                 'BookBorrowLog created!',
-                200,
+                201,
                 {
                     entity: BookBorrowLogdetails,
                     
