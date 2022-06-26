@@ -29,43 +29,43 @@ export default class Author extends Model {
         },
         allowNull: false,
     })
-    id: string;
+        id: string;
 
     @Length({ max: 16 })
     @Column({
         type: DataType.STRING(16),
         allowNull: true,
     })
-    Prefix: string;
+        Prefix: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: false,
     })
-    FirstName: string;
+        FirstName: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: true,
     })
-    MiddleName: string;
+        MiddleName: string;
 
     @Length({ max: 70 })
     @Column({
         type: DataType.STRING(70),
         allowNull: true,
     })
-    LastName: string;
+        LastName: string;
 
     @Column
     @CreatedAt
-    CreatedAt: Date;
+        CreatedAt: Date;
 
     @UpdatedAt
-    UpdatedAt: Date;
+        UpdatedAt: Date;
 
     @DeletedAt
-    DeletedAt: Date;
+        DeletedAt: Date;
 }
